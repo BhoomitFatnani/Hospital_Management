@@ -25,7 +25,10 @@ function App() {
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
-      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener(
+        "hashchange",
+        handleHashChange
+      );
     };
   }, []);
 

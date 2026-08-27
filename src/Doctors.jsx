@@ -1,47 +1,16 @@
+import useDoctors from "./hooks/useDoctors";
+
 function Doctors() {
-  const doctors = [
-    {
-      name: "Dr. Rahul Sharma",
-      specialization: "Cardiologist",
-      experience: "12 Years Experience",
-      icon: "👨‍⚕️",
-    },
-    {
-      name: "Dr. Priya Mehta",
-      specialization: "Dermatologist",
-      experience: "8 Years Experience",
-      icon: "👩‍⚕️",
-    },
-    {
-      name: "Dr. Amit Patel",
-      specialization: "Orthopedic",
-      experience: "10 Years Experience",
-      icon: "👨‍⚕️",
-    },
-    {
-      name: "Dr. Neha Kapoor",
-      specialization: "Pediatrician",
-      experience: "7 Years Experience",
-      icon: "👩‍⚕️",
-    },
-    {
-      name: "Dr. Arjun Verma",
-      specialization: "Neurologist",
-      experience: "15 Years Experience",
-      icon: "👨‍⚕️",
-    },
-    {
-      name: "Dr. Sneha Rao",
-      specialization: "Gynecologist",
-      experience: "9 Years Experience",
-      icon: "👩‍⚕️",
-    },
-  ];
+  const {
+    doctors,
+    searchTerm,
+    setSearchTerm,
+    loading,
+  } = useDoctors();
 
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Navbar */}
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
 
@@ -54,10 +23,7 @@ function Doctors() {
 
           <div className="flex items-center gap-8 text-gray-600">
 
-            <a
-              href="#"
-              className="hover:text-blue-600 transition"
-            >
+            <a href="#" className="hover:text-blue-600">
               Home
             </a>
 
@@ -70,28 +36,28 @@ function Doctors() {
 
             <a
               href="#appointments"
-              className="hover:text-blue-600 transition"
+              className="hover:text-blue-600"
             >
               Appointments
             </a>
 
             <a
               href="#login"
-              className="hover:text-blue-600 transition"
+              className="hover:text-blue-600"
             >
               Login
             </a>
 
           </div>
+
         </div>
       </nav>
 
-      {/* Page Header */}
       <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
 
         <div className="text-center">
 
-          <p className="text-blue-600 font-bold tracking-wide">
+          <p className="text-blue-600 font-bold">
             OUR MEDICAL TEAM
           </p>
 
@@ -100,81 +66,109 @@ function Doctors() {
           </h1>
 
           <p className="text-gray-600 text-lg mt-4">
-            Choose from our team of experienced healthcare professionals.
+            Choose from our experienced healthcare professionals.
           </p>
 
         </div>
 
-        {/* Search */}
         <div className="max-w-2xl mx-auto mt-8">
 
           <input
             type="text"
+            value={searchTerm}
+            onChange={(event) =>
+              setSearchTerm(event.target.value)
+            }
             placeholder="Search doctor or specialization..."
-            className="w-full h-12 px-5 bg-white border border-gray-300 rounded-xl shadow-sm text-gray-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="w-full h-12 px-5 bg-white border border-gray-300 rounded-xl shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
 
         </div>
 
       </section>
 
-      {/* Doctors */}
       <section className="max-w-7xl mx-auto px-6 pb-16">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        {loading ? (
 
-          {doctors.map((doctor, index) => (
+          <div className="text-center py-10">
 
-            <div
-              key={index}
-              className="bg-white border border-gray-200 rounded-2xl p-7 shadow-sm hover:shadow-lg transition duration-300"
-            >
+            <p className="text-blue-600 text-lg font-semibold">
+              Loading doctors...
+            </p>
 
-              <div className="flex items-center gap-5">
+          </div>
 
-                <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center text-4xl shrink-0">
-                  {doctor.icon}
-                </div>
+        ) : doctors.length === 0 ? (
 
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">
-                    {doctor.name}
-                  </h2>
+          <div className="text-center py-10">
 
-                  <p className="text-blue-600 font-semibold mt-1">
-                    {doctor.specialization}
-                  </p>
-                </div>
+            <p className="text-gray-600 text-lg">
+              No doctors found.
+            </p>
 
-              </div>
+          </div>
 
-              <div className="mt-6 border-t border-gray-100 pt-5">
+        ) : (
 
-                <p className="text-gray-600">
-                  <span className="font-semibold text-gray-800">
-                    Experience:
-                  </span>{" "}
-                  {doctor.experience}
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
 
-                <p className="text-green-600 font-medium mt-2">
-                  ● Available for consultation
-                </p>
+            {doctors.map((doctor) => (
 
-              </div>
-
-              <a
-                href="#appointments"
-                className="block text-center w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+              <div
+                key={doctor.id}
+                className="bg-white border border-gray-200 rounded-2xl p-7 shadow-sm hover:shadow-lg transition duration-300"
               >
-                Book Appointment
-              </a>
 
-            </div>
+                <div className="flex items-center gap-5">
 
-          ))}
+                  <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center text-4xl">
+                    {doctor.icon}
+                  </div>
 
-        </div>
+                  <div>
+
+                    <h2 className="text-xl font-bold">
+                      {doctor.name}
+                    </h2>
+
+                    <p className="text-blue-600 font-semibold mt-1">
+                      {doctor.specialization}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="mt-6 border-t pt-5">
+
+                  <p className="text-gray-600">
+                    <span className="font-semibold">
+                      Experience:
+                    </span>{" "}
+                    {doctor.experience}
+                  </p>
+
+                  <p className="text-green-600 font-medium mt-2">
+                    ● Available for consultation
+                  </p>
+
+                </div>
+
+                <a
+                  href="#appointments"
+                  className="block text-center w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                >
+                  Book Appointment
+                </a>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        )}
 
       </section>
 
@@ -182,4 +176,4 @@ function Doctors() {
   );
 }
 
-export default Doctors; 
+export default Doctors;

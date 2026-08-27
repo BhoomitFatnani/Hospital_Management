@@ -1,55 +1,88 @@
+import useAuth from "./hooks/useAuth";
+
 function Home() {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Navbar */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <nav className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
 
-          <a href="#" className="text-2xl font-bold text-blue-600">
+          <a
+            href="#"
+            className="text-3xl font-bold text-blue-600"
+          >
             MediCare
           </a>
 
-          <div className="flex flex-wrap justify-center gap-6 text-gray-600">
+          <div className="flex items-center gap-8 text-gray-600">
+
             <a href="#" className="hover:text-blue-600 transition">
               Home
             </a>
 
-            <a href="#doctors" className="hover:text-blue-600 transition">
+            <a
+              href="#doctors"
+              className="hover:text-blue-600 transition"
+            >
               Doctors
             </a>
 
-            <a href="#appointments" className="hover:text-blue-600 transition">
+            <a
+              href="#appointments"
+              className="hover:text-blue-600 transition"
+            >
               Appointments
             </a>
 
-            <a href="#login" className="hover:text-blue-600 transition">
-              Login
-            </a>
-          </div>
+            {isAuthenticated ? (
+              <button
+                onClick={logout}
+                className="text-red-600 font-semibold hover:text-red-700"
+              >
+                Logout
+              </button>
+            ) : (
+              <a
+                href="#login"
+                className="hover:text-blue-600 transition"
+              >
+                Login
+              </a>
+            )}
 
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-16">
 
         <div className="grid md:grid-cols-2 gap-10 items-center">
 
           <div>
-            <p className="text-blue-600 font-semibold mb-3">
+
+            {isAuthenticated && (
+              <p className="text-green-600 font-semibold mb-3">
+                Welcome, {user.name}
+              </p>
+            )}
+
+            <p className="text-blue-600 font-bold tracking-wide">
               HEALTHCARE MADE SIMPLE
             </p>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mt-3">
               Book Your Doctor
-              <span className="text-blue-600"> Appointment </span>
+              <span className="text-blue-600">
+                {" "}Appointment{" "}
+              </span>
               Easily
-            </h2>
+            </h1>
 
-            <p className="mt-5 text-gray-600 text-lg">
-              Find qualified doctors, check their availability and
-              book your hospital appointment online.
+            <p className="text-gray-600 text-lg mt-5">
+              Find qualified doctors, check their availability
+              and book your hospital appointment online.
             </p>
 
             <a
@@ -58,6 +91,7 @@ function Home() {
             >
               Book Appointment
             </a>
+
           </div>
 
           <div className="bg-blue-100 rounded-2xl p-10 text-center">
@@ -66,12 +100,13 @@ function Home() {
               🏥
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-gray-800">
               Quality Healthcare
-            </h3>
+            </h2>
 
             <p className="text-gray-600 mt-3">
-              Professional doctors and convenient appointment management.
+              Professional doctors and convenient appointment
+              management.
             </p>
 
           </div>
@@ -80,12 +115,11 @@ function Home() {
 
       </section>
 
-      {/* Services */}
       <section className="bg-white py-14">
 
         <div className="max-w-7xl mx-auto px-6">
 
-          <h2 className="text-3xl font-bold text-center text-gray-900">
+          <h2 className="text-3xl font-bold text-center">
             Our Services
           </h2>
 
@@ -95,14 +129,16 @@ function Home() {
               href="#doctors"
               className="p-6 bg-slate-50 rounded-xl shadow-sm hover:shadow-md transition"
             >
-              <div className="text-4xl mb-4">👨‍⚕️</div>
+              <div className="text-4xl mb-4">
+                👨‍⚕️
+              </div>
 
               <h3 className="text-xl font-bold">
                 Find Doctors
               </h3>
 
               <p className="text-gray-600 mt-2">
-                Search and view available doctors by specialization.
+                Search and view available doctors.
               </p>
             </a>
 
@@ -110,26 +146,30 @@ function Home() {
               href="#appointments"
               className="p-6 bg-slate-50 rounded-xl shadow-sm hover:shadow-md transition"
             >
-              <div className="text-4xl mb-4">📅</div>
+              <div className="text-4xl mb-4">
+                📅
+              </div>
 
               <h3 className="text-xl font-bold">
                 Book Appointment
               </h3>
 
               <p className="text-gray-600 mt-2">
-                Schedule appointments according to doctor availability.
+                Schedule appointments easily.
               </p>
             </a>
 
-            <div className="p-6 bg-slate-50 rounded-xl shadow-sm hover:shadow-md transition">
-              <div className="text-4xl mb-4">🔔</div>
+            <div className="p-6 bg-slate-50 rounded-xl shadow-sm">
+              <div className="text-4xl mb-4">
+                🔔
+              </div>
 
               <h3 className="text-xl font-bold">
                 Notifications
               </h3>
 
               <p className="text-gray-600 mt-2">
-                Receive updates about your appointments.
+                Receive appointment updates.
               </p>
             </div>
 
