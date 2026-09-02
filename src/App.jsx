@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import Home from "./Home";
-import Doctors from "./Doctors";
-import Appointments from "./Appointments";
-import Login from "./Login";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Doctors from "./components/Doctors";
+import Appointments from "./components/Appointments";
+import Login from "./components/Login";
 
 function App() {
   const getPageFromHash = () => {
@@ -32,19 +33,16 @@ function App() {
     };
   }, []);
 
-  if (page === "doctors") {
-    return <Doctors />;
-  }
+  return (
+    <>
+      <Navbar />
 
-  if (page === "appointments") {
-    return <Appointments />;
-  }
-
-  if (page === "login") {
-    return <Login />;
-  }
-
-  return <Home />;
+      {page === "doctors" && <Doctors />}
+      {page === "appointments" && <Appointments />}
+      {page === "login" && <Login />}
+      {page === "home" && <Home />}
+    </>
+  );
 }
 
 export default App;

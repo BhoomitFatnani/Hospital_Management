@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 
 function useAppointments() {
-  const [appointments, setAppointments] = useState([]);
-
-  useEffect(() => {
+  const [appointments, setAppointments] = useState(() => {
     const savedAppointments =
       localStorage.getItem("hospitalAppointments");
 
-    if (savedAppointments) {
-      setAppointments(JSON.parse(savedAppointments));
-    }
-  }, []);
+    return savedAppointments
+      ? JSON.parse(savedAppointments)
+      : [];
+  });
 
   useEffect(() => {
     localStorage.setItem(

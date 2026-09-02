@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAppointments from "./hooks/useAppointments";
+import useAppointments from "../hooks/useAppointments";
 
 function Appointments() {
   const {
@@ -62,41 +62,6 @@ function Appointments() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-
-          <a
-            href="#"
-            className="text-3xl font-bold text-blue-600"
-          >
-            MediCare
-          </a>
-
-          <div className="flex items-center gap-8 text-gray-600">
-
-            <a href="#" className="hover:text-blue-600">
-              Home
-            </a>
-
-            <a href="#doctors" className="hover:text-blue-600">
-              Doctors
-            </a>
-
-            <a
-              href="#appointments"
-              className="text-blue-600 font-semibold"
-            >
-              Appointments
-            </a>
-
-            <a href="#login" className="hover:text-blue-600">
-              Login
-            </a>
-
-          </div>
-
-        </div>
-      </nav>
 
       <section className="max-w-5xl mx-auto px-6 pt-12 pb-16">
 
