@@ -38,6 +38,14 @@ function Navbar() {
             Appointments
           </a>
 
+          <a
+            href="#docker"
+            className="text-blue-600 hover:text-blue-700 font-semibold transition flex items-center gap-1"
+          >
+            <span>🐳</span>
+            <span>Docker</span>
+          </a>
+
           {isAuthenticated && (
             <a
               href="#dashboard"

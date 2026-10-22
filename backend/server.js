@@ -43,6 +43,13 @@ app.get("/", (req, res) => {
   res.send("JWT Authentication API is running");
 });
 
+// Docker Verification Route (Exp 7)
+app.get("/api", (req, res) => {
+  res.json({
+    message: "Backend is running inside Docker!",
+  });
+});
+
 // 2. Mount Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
@@ -54,6 +61,6 @@ app.use(errorHandler);
 
 // Port and Listen
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });

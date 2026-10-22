@@ -5,6 +5,7 @@ import Doctors from "./components/Doctors";
 import Appointments from "./components/Appointments";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import DockerVerification from "./components/DockerVerification";
 
 function App() {
   const getPageFromHash = () => {
@@ -14,6 +15,7 @@ function App() {
     if (hash === "#appointments") return "appointments";
     if (hash === "#login") return "login";
     if (hash === "#dashboard") return "dashboard";
+    if (hash === "#docker") return "docker";
 
     return "home";
   };
@@ -40,6 +42,7 @@ function App() {
       {page === "appointments" && <Appointments />}
       {page === "login" && <Login />}
       {page === "dashboard" && <Dashboard />}
+      {page === "docker" && <DockerVerification />}
       {page === "home" && <Home />}
     </>
   );
