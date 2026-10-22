@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Hospital appointment secure backend API - Exp 5",
+  "description": "Hospital appointment secure backend API with JWT Auth and RBAC - Exp 6",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

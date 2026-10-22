@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Doctors from "./components/Doctors";
 import Appointments from "./components/Appointments";
 import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const getPageFromHash = () => {
@@ -12,6 +13,7 @@ function App() {
     if (hash === "#doctors") return "doctors";
     if (hash === "#appointments") return "appointments";
     if (hash === "#login") return "login";
+    if (hash === "#dashboard") return "dashboard";
 
     return "home";
   };
@@ -26,10 +28,7 @@ function App() {
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
-      window.removeEventListener(
-        "hashchange",
-        handleHashChange
-      );
+      window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
 
@@ -40,6 +39,7 @@ function App() {
       {page === "doctors" && <Doctors />}
       {page === "appointments" && <Appointments />}
       {page === "login" && <Login />}
+      {page === "dashboard" && <Dashboard />}
       {page === "home" && <Home />}
     </>
   );

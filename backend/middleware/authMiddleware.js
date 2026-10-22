@@ -1,19 +1,24 @@
 const jwt = require("jsonwebtoken");
 
+// 1. VERIFY TOKEN MIDDLEWARE
 const protect = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!token) {
     return res.status(401).json({
-      message: "Access denied",
+      message: "Access denied. No token provided.",
     });
   }
 
-  const token = authHeader.split(" ")[1];
-
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Expected format: "Bearer <token>"
+    const actualToken = token.startsWith("Bearer ")
+      ? token.split(" ")[1]
+      : token;
 
+    const decoded = jwt.verify(actualToken, process.env.JWT_SECRET);
+
+    // Attach decoded payload ({ id, role }) to req.user
     req.user = decoded;
 
     next();
@@ -24,4 +29,19 @@ const protect = (req, res, next) => {
   }
 };
 
-module.exports = protect;
+// 2. ROLE AUTHORIZATION MIDDLEWARE
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: "Access denied. You do not have permission.",
+      });
+    }
+    next();
+  };
+};
+
+module.exports = {
+  protect,
+  authorize,
+};

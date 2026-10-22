@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addAppointment, cancelAppointment } from "../store/appointmentSlice";
+import {
+  fetchAppointments,
+  createAppointment,
+  cancelAppointmentApi,
+} from "../store/appointmentSlice";
 
 const initialFormState = {
   patientName: "",
@@ -20,6 +24,10 @@ function Appointments() {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [banner, setBanner] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchAppointments());
+  }, [dispatch]);
 
   const todayDate = new Date().toISOString().split("T")[0];
 
@@ -157,7 +165,7 @@ function Appointments() {
       return;
     }
 
-    dispatch(addAppointment(formData));
+    dispatch(createAppointment(formData));
 
     setBanner({
       type: "success",
@@ -402,7 +410,7 @@ function Appointments() {
             <div className="space-y-4">
               {appointments.map((appointment) => (
                 <div
-                  key={appointment.id}
+                  key={appointment._id || appointment.id}
                   className="bg-white border rounded-xl p-5 shadow-sm"
                 >
                   <div className="flex flex-col md:flex-row justify-between gap-4">
@@ -435,7 +443,7 @@ function Appointments() {
                       {appointment.status === "Confirmed" && (
                         <button
                           onClick={() =>
-                            dispatch(cancelAppointment(appointment.id))
+                            dispatch(cancelAppointmentApi(appointment._id || appointment.id))
                           }
                           className="text-red-600 font-semibold hover:underline"
                         >

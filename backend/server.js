@@ -6,13 +6,14 @@ const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 // 1. Import Routes
-const appointmentRoutes = require("./routes/appointmentRoutes");
+const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
 
-// Security Middlewares (Experiment 5)
+// Security Middlewares
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
@@ -31,19 +32,20 @@ app.use(limiter);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("MongoDB Connected");
+    console.log("MongoDB connected");
   })
   .catch((error) => {
-    console.log("MongoDB Connection Error:", error);
+    console.log("MongoDB connection error:", error);
   });
 
-// Test Route
+// Test Route (Exp 6)
 app.get("/", (req, res) => {
-  res.json({ message: "Secure Full Stack API is Running" });
+  res.send("JWT Authentication API is running");
 });
 
 // 2. Mount Routes
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/appointments", appointmentRoutes);
 
 // 3. Error Handling Middlewares

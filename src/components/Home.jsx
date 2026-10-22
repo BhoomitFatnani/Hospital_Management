@@ -1,7 +1,7 @@
 import useAuth from "../hooks/useAuth";
 
 function Home() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-50">
