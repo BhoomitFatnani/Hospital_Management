@@ -15,17 +15,17 @@ function Home() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Exp 7: Full Stack Docker Application Verification Banner */}
+      {/* Exp 9: Containerizing Full-Stack App with Docker */}
       <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white py-4 px-6 shadow-sm border-b border-blue-900">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🐳</span>
             <div>
               <p className="font-bold text-sm tracking-wide">
-                Full Stack Docker Application (Exp 7)
+                Docker Containerized Application (Exp 9)
               </p>
               <p className="text-xs text-blue-200">
-                Frontend: React (Port 3000) • Backend: Express (Port 5000)
+                Frontend: React/Vite (Port 5173) • Backend: Express (Port 5000)
               </p>
             </div>
           </div>

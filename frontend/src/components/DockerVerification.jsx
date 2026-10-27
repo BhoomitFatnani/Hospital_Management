@@ -21,17 +21,17 @@ function DockerVerification() {
         </div>
 
         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-          Full Stack Docker Application
+          Experiment 9: Containerized Docker Application
         </h1>
 
         <p className="text-gray-500 font-medium mt-2">
-          Frontend: <span className="text-blue-600 font-semibold">React</span>
+          Frontend: <span className="text-blue-600 font-semibold">React (Vite)</span> | Backend: <span className="text-blue-600 font-semibold">Node.js (Express)</span>
         </p>
 
-        {/* Backend Response Badge matching Exp 7 manual Page 9 */}
+        {/* Backend Response Badge matching Exp 9 manual */}
         <div className="mt-8 p-4 rounded-xl border font-medium text-sm transition-all duration-300 bg-green-50 text-green-700 border-green-200 shadow-sm">
           <p className="text-xs uppercase tracking-wider text-green-600 font-bold mb-1">
-            Output 2: Live Container Communication
+            Live Container Communication
           </p>
           <span className="font-semibold">Backend Response: </span>
           <span className="font-bold">{message}</span>
@@ -41,11 +41,11 @@ function DockerVerification() {
         <div className="mt-8 pt-6 border-t border-gray-100 grid grid-cols-2 gap-4 text-xs text-gray-500">
           <div className="bg-slate-50 p-3 rounded-lg border border-gray-100">
             <p className="font-bold text-gray-700">Frontend Container</p>
-            <p className="text-blue-600 font-mono mt-0.5">3000:80 (Nginx)</p>
+            <p className="text-blue-600 font-mono mt-0.5">5173:5173 (Vite)</p>
           </div>
           <div className="bg-slate-50 p-3 rounded-lg border border-gray-100">
             <p className="font-bold text-gray-700">Backend Container</p>
-            <p className="text-blue-600 font-mono mt-0.5">5000:5000 (Node.js)</p>
+            <p className="text-blue-600 font-mono mt-0.5">5000:5000 (Express)</p>
           </div>
         </div>
 

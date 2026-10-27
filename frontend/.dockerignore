@@ -1,8 +1,4 @@
 node_modules
 dist
-dist-ssr
 .git
-backend
-.vscode-history
-postman
-.postman
+.env
