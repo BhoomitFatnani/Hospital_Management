@@ -221,8 +221,9 @@ function Login() {
           </button>
         </form>
 
-        <div className="mt-6 pt-5 border-t border-gray-100 text-center text-xs text-gray-400">
-          Backend API: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-gray-600">http://localhost:5000/api/auth</code>
+        <div className="mt-6 pt-5 border-t border-gray-100 text-center text-xs text-gray-400 flex items-center justify-center gap-1.5">
+          <span>🔒</span>
+          <span>Secure 256-bit encrypted authentication</span>
         </div>
       </div>
     </div>
