@@ -24,6 +24,31 @@ const io = new Server(server, {
   },
 });
 
+// Intelligent Automated Assistant Reply Generator
+function getAutomatedReply(userText) {
+  const lower = (userText || "").toLowerCase();
+
+  if (lower.includes("opd") || lower.includes("timing") || lower.includes("time") || lower.includes("hour")) {
+    return "🕒 MediCare OPD hours are Monday to Saturday from 9:00 AM to 8:00 PM. Emergency and ambulance services are active 24/7.";
+  }
+  if (lower.includes("cardio") || lower.includes("heart")) {
+    return "👨‍⚕️ Dr. Rahul Sharma (Cardiologist, 12 years experience) is on duty today. You can book a direct consultation in the Appointments tab.";
+  }
+  if (lower.includes("doctor") || lower.includes("specialist") || lower.includes("team")) {
+    return "🏥 We have 6 specialist departments on duty: Cardiology (Dr. Rahul Sharma), Dermatology (Dr. Priya Mehta), Orthopedics (Dr. Amit Patel), Pediatrics (Dr. Neha Kapoor), Neurology (Dr. Arjun Verma), and Gynecology (Dr. Sneha Rao).";
+  }
+  if (lower.includes("appointment") || lower.includes("book") || lower.includes("reschedule") || lower.includes("cancel")) {
+    return "📅 To schedule, view, or cancel your bookings, click 'Appointments' or check your personal 'Dashboard' in the navigation bar.";
+  }
+  if (lower.includes("emergency") || lower.includes("ambulance") || lower.includes("urgent")) {
+    return "🚨 For immediate emergency assistance, please call our 24/7 hospital helpline at 1800-MEDICARE or 108 directly.";
+  }
+  if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey")) {
+    return "👋 Hello! I am the MediCare Virtual Assistant. Our on-duty medical staff has also received your message. How can we help you today?";
+  }
+  return "Thank you for contacting MediCare Hospital. Your message has been logged for our on-duty healthcare team. We will attend to your request shortly!";
+}
+
 io.on("connection", (socket) => {
   console.log("A user connected to WebSocket:", socket.id);
 
@@ -36,7 +61,22 @@ io.on("connection", (socket) => {
       timestamp: data.timestamp || new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
+    // Broadcast user's message to everyone
     io.emit("chatMessage", enrichedMessage);
+
+    // If sent by a regular user/patient, trigger automated hospital assistant response after 1 sec
+    if (data.role !== "admin" && data.username !== "MediCare Medical Assistant") {
+      setTimeout(() => {
+        const botReply = {
+          id: Date.now() + "_bot",
+          username: "MediCare Medical Assistant",
+          message: getAutomatedReply(data.message),
+          role: "admin",
+          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        };
+        io.emit("chatMessage", botReply);
+      }, 1000);
+    }
   });
 
   socket.on("disconnect", () => {
