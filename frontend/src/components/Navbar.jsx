@@ -12,10 +12,11 @@ function Navbar() {
           href="#home"
           className="text-2xl font-bold text-blue-600 flex items-center gap-2"
         >
+          <span>🏥</span>
           <span>MediCare</span>
         </a>
 
-        <div className="flex items-center gap-6 text-gray-600 font-medium">
+        <div className="flex items-center gap-6 text-gray-600 font-medium text-sm sm:text-base">
 
           <a
             href="#home"
@@ -39,11 +40,11 @@ function Navbar() {
           </a>
 
           <a
-            href="#docker"
-            className="text-blue-600 hover:text-blue-700 font-semibold transition flex items-center gap-1"
+            href="#chat"
+            className="hover:text-blue-600 transition flex items-center gap-1.5 font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-lg"
           >
-            <span>🐳</span>
-            <span>Docker</span>
+            <span>💬</span>
+            <span>Live Chat</span>
           </a>
 
           {isAuthenticated && (
@@ -65,13 +66,13 @@ function Navbar() {
           )}
 
           {isAuthenticated ? (
-            <div className="flex items-center gap-4 pl-2 border-l border-gray-200">
-              <span className="text-xs text-gray-400 hidden sm:inline">
+            <div className="flex items-center gap-3 pl-2 border-l border-gray-200">
+              <span className="text-xs text-gray-500 hidden sm:inline font-semibold">
                 {user?.name?.split(" ")[0]}
               </span>
               <button
                 onClick={logout}
-                className="text-red-500 hover:text-red-700 text-sm transition"
+                className="text-red-500 hover:text-red-700 text-sm font-medium transition"
               >
                 Logout
               </button>
@@ -79,7 +80,7 @@ function Navbar() {
           ) : (
             <a
               href="#login"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition shadow-sm"
             >
               Login / Register
             </a>

@@ -1,4 +1,6 @@
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -12,6 +14,35 @@ const appointmentRoutes = require("./routes/appointmentRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
+const server = http.createServer(app);
+
+// Initialize Socket.IO for real-time WebSocket communication
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("A user connected to WebSocket:", socket.id);
+
+  socket.on("chatMessage", (data) => {
+    const enrichedMessage = {
+      id: Date.now() + Math.random().toString(36).substring(2, 7),
+      username: data.username || "Anonymous Patient",
+      message: data.message,
+      role: data.role || "user",
+      timestamp: data.timestamp || new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    io.emit("chatMessage", enrichedMessage);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected from WebSocket:", socket.id);
+  });
+});
 
 // Security Middlewares
 app.use(helmet());
@@ -38,15 +69,15 @@ mongoose
     console.log("MongoDB connection error:", error);
   });
 
-// Test Route (Exp 6)
+// Health Check Route
 app.get("/", (req, res) => {
-  res.send("JWT Authentication API is running");
+  res.send("MediCare Hospital API is running");
 });
 
-// Docker Verification Route (Exp 7)
 app.get("/api", (req, res) => {
   res.json({
-    message: "Backend is running inside Docker!",
+    status: "healthy",
+    message: "MediCare Hospital API and WebSocket Server are active!",
   });
 });
 
@@ -59,8 +90,8 @@ app.use("/api/appointments", appointmentRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// Port and Listen
+// Port and Listen using http server (supporting both REST and WebSockets)
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
